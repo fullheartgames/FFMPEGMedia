@@ -70,6 +70,35 @@ public class FFMPEGMedia : ModuleRules
 			}
 
 		}
+		else if (Target.Platform == UnrealTargetPlatform.HoloLens)
+		{
+			isLibrarySupported = true;
+
+			string PlatformString = "ARM64";
+
+			string LibrariesPath = Path.Combine(Path.Combine(Path.Combine(ThirdPartyPath, "ffmpeg", "lib"), "vs"), PlatformString);
+
+			System.Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
+
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "avcodec.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "avdevice.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "avfilter.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "avformat.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "avutil.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "swresample.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "swscale.lib"));
+
+			string[] dlls = {"avcodec-58.dll","avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "swresample-3.dll", "swscale-5.dll", "postproc-55.dll"};
+
+			string BinariesPath = Path.Combine(Path.Combine(Path.Combine(ThirdPartyPath, "ffmpeg", "bin"), "vs"), PlatformString);
+			foreach (string dll in dlls)
+			{
+				PublicDelayLoadDLLs.Add(dll);
+				//CopyToBinaries(Path.Combine(BinariesPath, dll), Target);
+				RuntimeDependencies.Add(Path.Combine(BinariesPath, dll), StagedFileType.NonUFS);
+			}
+
+		}
 		else if (Target.Platform == UnrealTargetPlatform.Mac)
 		{
 			isLibrarySupported = true;
@@ -153,6 +182,16 @@ public class FFMPEGMedia : ModuleRules
                 }
             );
         }
+
+		if (Target.Platform == UnrealTargetPlatform.HoloLens)
+		{
+            PrivateDependencyModuleNames.AddRange(
+                new string[]
+                {
+                    "RHI"
+                }
+            );
+		}
 
 		PrivateIncludePathModuleNames.AddRange(
 			new string[] {

@@ -160,6 +160,7 @@ public:
 		SupportedPlatforms.Add(TEXT("Windows"));
 		SupportedPlatforms.Add(TEXT("Mac"));
         SupportedPlatforms.Add(TEXT("Android"));
+		SupportedPlatforms.Add(TEXT("Hololens"));
 
 	
 
