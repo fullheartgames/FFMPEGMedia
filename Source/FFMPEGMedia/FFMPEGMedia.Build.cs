@@ -88,7 +88,7 @@ public class FFMPEGMedia : ModuleRules
 			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "swresample.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "swscale.lib"));
 
-			string[] dlls = {"avcodec-58.dll","avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "swresample-3.dll", "swscale-5.dll", "postproc-55.dll"};
+			string[] dlls = {"avcodec-58.dll","avdevice-58.dll", "avfilter-7.dll", "avformat-58.dll", "avutil-56.dll", "swresample-3.dll", "swscale-5.dll"};
 
 			string BinariesPath = Path.Combine(Path.Combine(Path.Combine(ThirdPartyPath, "ffmpeg", "bin"), "vs"), PlatformString);
 			foreach (string dll in dlls)
